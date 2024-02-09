@@ -53,16 +53,28 @@ class ConnectFour
       case column
       in [*, ^shape, ^shape, ^shape, ^shape, *]
         won = true
-        break
+        puts 'gibberish'
+        return true
       else 
         won = false
       end
     end
-    @diagonals.each do |column|
-      case column
+    @board.each do |row|
+      case row
       in [*, ^shape, ^shape, ^shape, ^shape, *]
         won = true
-        break
+        puts 'gibberish'
+        return true
+      else 
+        won = false
+      end
+    end
+    @diagonals.each do |diagonal|
+      case diagonal
+        in [*, ^shape, ^shape, ^shape, ^shape, *]
+        won = true
+        puts 'gibberish'
+        return true
       else 
         won = false
       end
@@ -121,15 +133,10 @@ def play_game
   p connect_four.check_win('white')
   begin
     connect_four.add_piece(2, 'white')
-    connect_four.add_piece(2, 'white')
-    connect_four.add_piece(2, 'white')
-    connect_four.add_piece(2, 'white')
     connect_four.add_piece(3, 'white')
-    connect_four.add_piece(3, 'white')
-    connect_four.add_piece(3, 'white')
-    connect_four.add_piece(4, 'white')
     connect_four.add_piece(4, 'white')
     connect_four.add_piece(5, 'white')
+    connect_four.add_piece(6, 'white')
     p connect_four.check_win('white')
     connect_four.print_board
   rescue ColumnFullError
