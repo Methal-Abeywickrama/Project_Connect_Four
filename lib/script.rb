@@ -46,15 +46,46 @@ class ConnectFour
   end
 
   def check_win(shape)
+    shape = shape == 'white' ? WHITE : BLACK
     won = false
+    @diagonals = get_diagonals
     @columns.each do |column|
       case column
-      in [^shape, ^shape, ^shape, ^shape]
+      in [*, ^shape, ^shape, ^shape, ^shape, *]
+        won = true
+        break
+      else 
+        won = false
       end
     end
+    @diagonals.each do |column|
+      case column
+      in [*, ^shape, ^shape, ^shape, ^shape, *]
+        won = true
+        break
+      else 
+        won = false
+      end
+    end
+    won
   end
 
-  def add_piece(column_no=2, color='shite')
+  def get_diagonals
+    [[@board[3][0], @board[2][1], @board[1][2], @board[0][3]],
+     [@board[4][0], @board[3][1], @board[2][2], @board[1][3], @board[0][4]],
+     [@board[5][0], @board[4][1], @board[3][2], @board[2][3], @board[1][4], @board[0][5]],
+     [@board[5][1], @board[4][2], @board[3][3], @board[2][4], @board[1][5], @board[0][6]],
+     [@board[5][2], @board[4][3], @board[3][4], @board[2][5], @board[1][6]],
+     [@board[5][3], @board[4][4], @board[3][5], @board[4][6]],
+     [@board[2][0], @board[3][1], @board[4][2], @board[5][3]],
+     [@board[1][0], @board[2][1], @board[3][2], @board[4][3], @board[5][4]],
+     [@board[0][0], @board[1][1], @board[2][2], @board[3][3], @board[4][4], @board[5][5]],
+     [@board[0][1], @board[1][2], @board[2][3], @board[3][4], @board[4][5], @board[5][6]],
+     [@board[0][2], @board[1][3], @board[2][4], @board[3][5], @board[4][6]],
+     [@board[0][3], @board[1][4], @board[2][5], @board[3][6]]]
+  end
+
+  def add_piece(column_no=2, color='white')
     column = @columns[column_no - 1]
     color == 'white' ? color = WHITE : color = BLACK
     raise ColumnFullError.new('sd') unless column.any?(BLANK)
@@ -87,13 +118,19 @@ def play_game
   connect_four.print_board
 
   won = false
+  p connect_four.check_win('white')
   begin
     connect_four.add_piece(2, 'white')
     connect_four.add_piece(2, 'white')
     connect_four.add_piece(2, 'white')
     connect_four.add_piece(2, 'white')
-    connect_four.add_piece(2, 'white')
-    connect_four.add_piece(2, 'white')
+    connect_four.add_piece(3, 'white')
+    connect_four.add_piece(3, 'white')
+    connect_four.add_piece(3, 'white')
+    connect_four.add_piece(4, 'white')
+    connect_four.add_piece(4, 'white')
+    connect_four.add_piece(5, 'white')
+    p connect_four.check_win('white')
     connect_four.print_board
   rescue ColumnFullError
     puts 'its ok'
