@@ -49,7 +49,6 @@ class ConnectFour
       case column
       in [*, ^shape, ^shape, ^shape, ^shape, *]
         won = true
-        puts 'gibberish'
         return true
       else 
         won = false
@@ -59,7 +58,6 @@ class ConnectFour
       case row
       in [*, ^shape, ^shape, ^shape, ^shape, *]
         won = true
-        puts 'gibberish'
         return true
       else 
         won = false
@@ -69,7 +67,6 @@ class ConnectFour
       case diagonal
         in [*, ^shape, ^shape, ^shape, ^shape, *]
         won = true
-        puts 'gibberish'
         return true
       else 
         won = false
