@@ -12,11 +12,8 @@ class ConnectFour
 
   def initialize
     @board = Array.new(6) { Array.new(7, BLANK) }
-    # @board.push([@white, @blank, @black, @white, @blank, @black, @blank])
     @board.push(["1 ", "2 ", "3 ", "4 ", "5 ", "6 ", "7 "])
     @columns = column_set
-    p @columns
-    p @board
   end
 
   def change_square(a, b)
@@ -33,7 +30,6 @@ class ConnectFour
 
       column.push(row[column_no])
     end
-    p column
     column
   end
 
@@ -121,6 +117,19 @@ class ConnectFour
       print "|\n"
     end
   end
+
+  def get_valid_input
+    valid = false
+    until valid
+      valid = true
+      input = gets.chomp.to_i 
+      if input.zero? || @columns[input - 1].none?(BLANK)
+        valid = false
+        puts 'Invalid input, try again'
+      end
+    end
+    input 
+  end
 end
 
 
@@ -130,22 +139,29 @@ def play_game
   connect_four.print_board
 
   won = false
-  p connect_four.check_win('white')
-  begin
-    connect_four.add_piece(2, 'white')
-    connect_four.add_piece(3, 'white')
-    connect_four.add_piece(4, 'white')
-    connect_four.add_piece(5, 'white')
-    connect_four.add_piece(6, 'white')
-    p connect_four.check_win('white')
+  while !won
+    puts 'Player 1, select a column'
+    input = connect_four.get_valid_input
+    connect_four.add_piece(input, 'white')
     connect_four.print_board
-  rescue ColumnFullError
-    puts 'its ok'
-  end
+    won = connect_four.check_win('white')
+    if won
+      puts 'Winner is player 1'
+      break
+    end
 
-  # while !won
-  #   'Player 1, select a column'
-  # end
+    puts 'Player 2, select a column'
+    input = connect_four.get_valid_input
+    connect_four.add_piece(input, 'black')
+    connect_four.print_board
+    won = connect_four.check_win('black')
+    if won
+      puts 'Winner is player 2'
+      break
+    end
+  end
+ 
+
 
 end
 
